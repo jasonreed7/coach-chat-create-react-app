@@ -3,9 +3,13 @@ body {
 }
 
 .message-list {
-	height: 90vh;
+	height: 80vh;
 	overflow-y: scroll;
 	width: 100%;
+}
+
+.date-change {
+	text-align: center;
 }
 
 .message {

@@ -1,6 +1,5 @@
 var React = require('react');
 var TextArea = require('react-textarea-autosize').default;
-var EJ = EJ;
 
 var MessageForm = React.createClass({
 	getInitialState: function() {
@@ -17,9 +16,10 @@ var MessageForm = React.createClass({
 		var that = this;
 		var userInput = this.state.userInput;
 
-		this.props.sendMessage(userInput).then(function() {
-			that.setState({ userInput: '' });
-		});
+
+		this.setState({ userInput: '' });
+
+		this.props.sendMessage(userInput);
 	},
 
 	render: function() {
@@ -27,7 +27,6 @@ var MessageForm = React.createClass({
 			<div className="message-form">
 				<TextArea className="message-input" value={this.state.userInput} onChange={this.handleUserInput} />
 				<button className="message-button" onClick={this.sendMessage}>Send Message</button>
-				<EJ.RTE width="100%" minWidth="150px" isResponsive={true}></EJ.RTE>
 			</div>
 		);
 	}
