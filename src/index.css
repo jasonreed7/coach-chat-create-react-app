@@ -1,0 +1,39 @@
+body {
+  font-family: "Helvetica Neue", serif;
+}
+
+.message-list {
+	height: 90vh;
+	overflow-y: scroll;
+	width: 100%;
+}
+
+.message {
+	margin: 8px 0;
+}
+
+.poster, .time {
+	display: inline-block;
+}
+
+.poster {
+	font-weight: bold;
+}
+
+.time {
+	color: gray;
+	margin-left: 10px;
+}
+
+
+.message-form {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	background-color: white;
+	z-index: 100;
+}
+
+.message-input {
+	width: 90%;
+}
