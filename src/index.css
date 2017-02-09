@@ -91,3 +91,19 @@ body {
 	border-radius: 4px;
 	padding: 6px 12px;
 }
+
+/* Webkit scrollbar */
+*::-webkit-scrollbar {
+    height: 8px;
+    width: 8px;
+    background: rgba(0,0,0,0.05);
+}
+
+*::-webkit-scrollbar-corner {
+    background-color: rgba(0,0,0,0.05);
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: rgba(0,0,0,0.15);
+    -webkit-border-radius: 50px;
+}
