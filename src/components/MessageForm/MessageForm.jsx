@@ -25,7 +25,7 @@ var MessageForm = React.createClass({
 	render: function() {
 		return (
 			<div className="message-form">
-				<TextArea className="message-input" value={this.state.userInput} onChange={this.handleUserInput} />
+				<TextArea className="message-input" value={this.state.userInput} onChange={this.handleUserInput} onHeightChange={this.props.resizeMessageList} />
 				<button className="message-button" onClick={this.sendMessage}>Send Message</button>
 			</div>
 		);

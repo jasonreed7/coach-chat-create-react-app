@@ -29,10 +29,15 @@ var App = React.createClass({
         if(i === 0) {
           currentMessage.PostTime = new Date(currentMessage.PostTime);
           currentMessage.DateChange = true;
+          currentMessage.Content = currentMessage.Content.replace('<!doctype html> <html lang="en"> <head> <meta charset="utf-8" ></head><body><div class="section" style="margin-bottom: 10px;">', '')
+            .replace('<br><br><a href=mailto:ENGAGEMENT1@GOALSPRIING.COM>Send a new post to the team</a><br></div></body></html>');
         }
 
         var nextMessage = response[i + 1];
         nextMessage.PostTime = new Date(nextMessage.PostTime);
+        nextMessage.Content = nextMessage.Content.replace('<!doctype html> <html lang="en"> <head>  <meta charset="utf-8" ></head><body><div class="section" style="margin-bottom: 10px;">', '')
+            .replace('<br><br><a href=mailto:ENGAGEMENT1@GOALSPRIING.COM>Send a new post to the team</a><br></div></body></html>','');
+        
 
         // if currentMessage and nextMessage dates are different
         if(!sameDate(currentMessage.PostTime, nextMessage.PostTime)) {
@@ -90,6 +95,17 @@ var App = React.createClass({
     });
   },
 
+  // Resize message list for when textarea resizes
+  resizeMessageList: function(){
+    var $messageList = jQuery('.message-list');
+    var $messageForm = jQuery('.message-form');
+    var topPaddingPixels = 20;
+
+    var newHeight = 'calc(100% - ' + ($messageForm.outerHeight() + topPaddingPixels)+ 'px)';
+
+    $messageList.css('height', newHeight);
+  },
+
   componentDidMount: function() {
     this.getMessages();
   },
@@ -98,7 +114,7 @@ var App = React.createClass({
     return (
       <div>
         <MessageList messages={this.state.messages} />
-        <MessageForm sendMessage={this.sendMessage} />
+        <MessageForm sendMessage={this.sendMessage} resizeMessageList={this.resizeMessageList} />
       </div>
     );
   } 
