@@ -1,5 +1,6 @@
 var React = require('react');
 var TextArea = require('react-textarea-autosize').default;
+var jQuery = require('jquery');
 
 var MessageForm = React.createClass({
 	getInitialState: function() {
@@ -13,13 +14,15 @@ var MessageForm = React.createClass({
 	},
 
 	sendMessage: function() {
-		var that = this;
 		var userInput = this.state.userInput;
 
 
 		this.setState({ userInput: '' });
 
-		this.props.sendMessage(userInput);
+		if(userInput.trim() != '') {
+			this.props.sendMessage(userInput);
+			jQuery('.message-input').focus();
+		}
 	},
 
 	render: function() {

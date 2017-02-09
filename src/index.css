@@ -82,6 +82,8 @@ body {
 .message-input {
 	margin-right: 5px;
 	flex-grow: 1;
+	resize: none;
+	overflow: hidden;
 }
 
 .message-button {
