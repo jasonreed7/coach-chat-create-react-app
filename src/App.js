@@ -3,6 +3,9 @@ var jQuery = require('jquery');
 import MessageList from './components/MessageList/MessageList';
 import MessageForm from './components/MessageForm/MessageForm';
 
+//var webApiAddress = 'http://cycwebapi2.azurewebsites.net';
+var webApiAddress = 'http://92450e4e.ngrok.io';
+
 function sameDate(date1, date2) {
   return date1.getDate() === date2.getDate() && date1.getMonth() === date2.getMonth() && date1.getFullYear() === date2.getFullYear();
 }
@@ -10,43 +13,48 @@ function sameDate(date1, date2) {
 var App = React.createClass({
   
   getInitialState: function() {
+
+    //Retrieve session data
+    var userState = {};
+
+
+    var storedData = sessionStorage.getItem("userState");
+
+    if(storedData) {
+      userState = JSON.parse(storedData);
+    }
+
+    var sessionID = userState.session.id;
+    var firstName = userState.user.firstName;
+    var lastName = userState.user.lastName;
+
     return {
-      messages: []
+      messages: [],
+      sessionID: sessionID,
+      name: firstName + ' ' + lastName
     };
   },
 
   getMessages: function() {
     var that = this; 
 
-    return fetch('http://cycwebapi2.azurewebsites.net/api/User/TeamPosts?sessionID=14246').then(function(response) {
+    return fetch(webApiAddress + '/api/User/TeamPosts?sessionID=' + this.state.sessionID + '&plMostRecentCount=0').then(function(response) {
       return response.json();
     }).then(function(response) {
       response = response.reverse();
 
-      // Doesn't go into for loop if only one message
-      if(response.length == 1) {
+      // Handle first message
+      if(response[0]) {
         var firstMessage = response[0];
         firstMessage.PostTime = new Date(firstMessage.PostTime);
         firstMessage.DateChange = true;
-        firstMessage.Content = firstMessage.Content.replace('<!doctype html> <html lang="en"> <head>  <meta charset="utf-8" ></head><body><div class="section" style="margin-bottom: 10px;">', '')
-            .replace('<br><br><a href=mailto:ENGAGEMENT1@GOALSPRIING.COM>Send a new post to the team</a><br></div></body></html>','');
       }
 
       for(var i = 0; i < response.length - 1; i++) {
         var currentMessage = response[i];
 
-        if(i === 0) {
-          currentMessage.PostTime = new Date(currentMessage.PostTime);
-          currentMessage.DateChange = true;
-          currentMessage.Content = currentMessage.Content.replace('<!doctype html> <html lang="en"> <head> <meta charset="utf-8" ></head><body><div class="section" style="margin-bottom: 10px;">', '')
-            .replace('<br><br><a href=mailto:ENGAGEMENT1@GOALSPRIING.COM>Send a new post to the team</a><br></div></body></html>', '');
-        }
-
         var nextMessage = response[i + 1];
         nextMessage.PostTime = new Date(nextMessage.PostTime);
-        nextMessage.Content = nextMessage.Content.replace('<!doctype html> <html lang="en"> <head>  <meta charset="utf-8" ></head><body><div class="section" style="margin-bottom: 10px;">', '')
-            .replace('<br><br><a href=mailto:ENGAGEMENT1@GOALSPRIING.COM>Send a new post to the team</a><br></div></body></html>','');
-        
 
         // if currentMessage and nextMessage dates are different
         if(!sameDate(currentMessage.PostTime, nextMessage.PostTime)) {
@@ -76,7 +84,7 @@ var App = React.createClass({
 
     this.setState({ messages: messages.concat([{
       Content: message,
-      Poster: 'Bob',
+      Poster: this.state.name,
       PostTime: postTime,
       DateChange: dateChange 
     }]) });
@@ -90,11 +98,11 @@ var App = React.createClass({
 
     return new Promise(function(resolve, reject) {
       jQuery.ajax({
-        url: 'http://cycwebapi2.azurewebsites.net/api/User/TeamPost',
+        url: webApiAddress + '/api/User/TeamPost',
         method: 'PUT',
         data: {
           Content: message,
-          SessionID: 14246,
+          SessionID: that.state.sessionID,
           Subject: 'Test'
         }
       }).done(function() {

@@ -10,7 +10,7 @@ var MessageItem = React.createClass({
 				) : '' }
 				<div className="message">
 					<div className="poster">{this.props.poster}</div>
-					<div className="time">{ dateFormat(this.props.time, 'h:mm TT') }</div>
+					<div className="time">{ dateFormat(this.props.time, 'h:MM TT') }</div>
 					<div className="content">{this.props.content}</div>
 				</div>
 			</div>
