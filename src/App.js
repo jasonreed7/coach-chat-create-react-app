@@ -23,6 +23,15 @@ var App = React.createClass({
     }).then(function(response) {
       response = response.reverse();
 
+      // Doesn't go into for loop if only one message
+      if(response.length == 1) {
+        var firstMessage = response[0];
+        firstMessage.PostTime = new Date(firstMessage.PostTime);
+        firstMessage.DateChange = true;
+        firstMessage.Content = firstMessage.Content.replace('<!doctype html> <html lang="en"> <head>  <meta charset="utf-8" ></head><body><div class="section" style="margin-bottom: 10px;">', '')
+            .replace('<br><br><a href=mailto:ENGAGEMENT1@GOALSPRIING.COM>Send a new post to the team</a><br></div></body></html>','');
+      }
+
       for(var i = 0; i < response.length - 1; i++) {
         var currentMessage = response[i];
 
@@ -30,7 +39,7 @@ var App = React.createClass({
           currentMessage.PostTime = new Date(currentMessage.PostTime);
           currentMessage.DateChange = true;
           currentMessage.Content = currentMessage.Content.replace('<!doctype html> <html lang="en"> <head> <meta charset="utf-8" ></head><body><div class="section" style="margin-bottom: 10px;">', '')
-            .replace('<br><br><a href=mailto:ENGAGEMENT1@GOALSPRIING.COM>Send a new post to the team</a><br></div></body></html>');
+            .replace('<br><br><a href=mailto:ENGAGEMENT1@GOALSPRIING.COM>Send a new post to the team</a><br></div></body></html>', '');
         }
 
         var nextMessage = response[i + 1];
