@@ -1,3 +1,16 @@
+## Coach Chat
+
+This is a simple chat webapp created with React and Create React App (see readme below). It currently uses a temporary token-based login page before letting the user access the app. To run, clone the repository. Next run `npm install` inside of the cloned repository. Run `npm start` to start the local server. In Chrome navigate to `http://localhost:3000/login.html?token=d65e4ebb-3e95-439b-b213-70e393d3cb2a` to access a sample account. The login page will send you to `index.html`.
+
+Next steps:
+
+- Test in other browsers
+- Display correct username data once that feature is fixed in backend
+- Work on a message fetching strategy- websocket? Ajax requests on timed intervals depending on user activity?
+- Polyfills
+- Replace jQuery with lighter weight options
+- Future features: Emojis, profile pics, file attachments
+
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 Below you will find some information on how to perform common tasks.<br>
