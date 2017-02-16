@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+	<!-- Include Helvetica Neue -->
+	<style type="text/css">
+	@font-face{
+	font-family:"HelveticaNeueW02-65Medi";
+	src:url("Fonts/694027/55f60419-09c3-42bd-b81f-1983ff093852.eot?#iefix");
+	src:url("Fonts/694027/55f60419-09c3-42bd-b81f-1983ff093852.eot?#iefix") format("eot"),url("Fonts/694027/5b4a262e-3342-44e2-8ad7-719998a68134.woff") format("woff"),url("Fonts/694027/4a3ef5d8-cfd9-4b96-bd67-90215512f1e5.ttf") format("truetype"),url("Fonts/694027/58ab5075-53ea-46e6-9783-cbb335665f88.svg#58ab5075-53ea-46e6-9783-cbb335665f88") format("svg");
+	}
+	@font-face{
+	font-family:"HelveticaNeueW02-75Bold";
+	src:url("Fonts/694033/db853e0e-929b-4272-b420-c946c954cf3a.eot?#iefix");
+	src:url("Fonts/694033/db853e0e-929b-4272-b420-c946c954cf3a.eot?#iefix") format("eot"),url("Fonts/694033/4a9c62ab-b359-4081-8383-a0d1cdebd111.woff") format("woff"),url("Fonts/694033/db5f9ba6-05a4-433a-9461-0a6f257a0c3a.ttf") format("truetype"),url("Fonts/694033/25e09910-ffc3-4fc4-b0d1-db9a95dface8.svg#25e09910-ffc3-4fc4-b0d1-db9a95dface8") format("svg");
+	}
+
+	</style>
+	<script type="text/javascript">
+	var MTUserId='707e3e6d-153e-4d94-b6dc-40fe09b120f6';
+	var MTFontIds = new Array();
+
+	MTFontIds.push("694027"); // Neue Helvetica® W02 65 Medium
+	MTFontIds.push("694033"); // Neue Helvetica® W02 75 Bold
+	(function() {
+	var mtTracking = document.createElement('script');
+	mtTracking.type='text/javascript';
+	mtTracking.async='true';
+	mtTracking.src=('https:'==document.location.protocol?'https:':'http:')+'//fast.fonts.net/lt/trackingCode.js';
+
+	(document.getElementsByTagName('head')[0]||document.getElementsByTagName('body')[0]).appendChild(mtTracking);
+	})();
+	</script>
+
+	<script>
+	$(document).ready(function() {
+
+		var webApiAddress = 'http://cycwebapi2.azurewebsites.net';
+
+		function getUrlVars() {
+			var vars = {};
+			var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+				vars[key] = value;
+			});
+			return vars;
+		}
+
+		function rejectLogin(company) {
+			$('#v-center').html('<div class="error-message">There was an error logging in. Please use your personal link.</div>')
+		}
+
+		var urlToken = getUrlVars()["token"];
+		var urlMode = getUrlVars()["mode"];
+
+		//Send link without token to Warby coming soon page
+		if(!urlToken) {
+			rejectLogin();
+			return false;
+		}
+
+		var userState = new Object();
+		userState.user = new Object();
+
+
+		if(urlToken) {
+			$.support.cors = true;
+
+
+			var compositeData = {
+				BrowserInfo: navigator.userAgent,
+				userID: urlToken
+			};
+
+			$.ajax({
+				type: 'PUT',
+				url: webApiAddress + '/composite/newSession',
+				contentType: 'application/json; charset=utf-8',
+				data: JSON.stringify(compositeData)
+			}).done(function (data) {
+				if(data.sessionID && data.sessionResp && data.sessionResp.nameFirst && data.sessionResp.nameLast)
+				{
+					var user = {
+						sessionID: data.sessionID,
+						token: urlToken,
+						firstName: data.sessionResp.nameFirst,
+						lastName: data.sessionResp.nameLast
+					};
+
+					sessionStorage.setItem("user", JSON.stringify(user));
+
+					window.location.href = "/";
+
+
+				}
+				else
+				{
+					rejectLogin();
+					return false;
+				}
+
+			}).fail(function (data) {
+				rejectLogin();
+				return false;
+			});
+
+		}
+
+
+	});
+	</script>
+	<style>
+	html, body {
+		height: 100%;
+		width: 100%;
+		padding: 0;
+		margin: 0;
+		overflow: hidden;
+	}
+	#v-center {
+		position: absolute;
+		top: 50%;
+		width: 100%;
+		text-align: center;
+		margin-top: -43px;
+	}
+	#almost-there {
+		font-family: "HelveticaNeueW02-65Medi";
+		margin-top: 15px;
+		font-size: 15px;
+	}
+	#logo {
+		position: absolute;
+		top: 10px;
+		left: 15px;
+	}
+	@media screen and (max-width: 765px) {
+		#logo {
+			left: 50%;
+			margin-left: -140px;
+		}
+	}
+
+	.error-message {
+		padding: 0 20px;
+	}
+	</style>
+</head>
+<body>
+	<img id='logo' src='http://chooseyourcoach.com/pictures/cyc-logo.jpg'>
+	<div id="v-center">
+		<img id='#waiting-popup' src='http://chooseyourcoach.com/pictures/waitingpopup.gif'>
+		<div id='almost-there'>Almost there...</div>
+	</div>
+</body>
+</html>

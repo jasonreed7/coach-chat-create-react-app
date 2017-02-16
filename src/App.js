@@ -3,8 +3,7 @@ var jQuery = require('jquery');
 import MessageList from './components/MessageList/MessageList';
 import MessageForm from './components/MessageForm/MessageForm';
 
-//var webApiAddress = 'http://cycwebapi2.azurewebsites.net';
-var webApiAddress = 'http://92450e4e.ngrok.io';
+var webApiAddress = 'http://cycwebapi2.azurewebsites.net';
 
 function sameDate(date1, date2) {
   return date1.getDate() === date2.getDate() && date1.getMonth() === date2.getMonth() && date1.getFullYear() === date2.getFullYear();
@@ -15,18 +14,18 @@ var App = React.createClass({
   getInitialState: function() {
 
     //Retrieve session data
-    var userState = {};
+    var user = {};
 
 
-    var storedData = sessionStorage.getItem("userState");
+    var storedData = sessionStorage.getItem("user");
 
     if(storedData) {
-      userState = JSON.parse(storedData);
+      user = JSON.parse(storedData);
     }
 
-    var sessionID = userState.session.id;
-    var firstName = userState.user.firstName;
-    var lastName = userState.user.lastName;
+    var sessionID = user.sessionID;
+    var firstName = user.firstName;
+    var lastName = user.lastName;
 
     return {
       messages: [],
@@ -106,6 +105,10 @@ var App = React.createClass({
           Subject: 'Test'
         }
       }).done(function() {
+      	/* 
+      	Wait enought time for new message to be in datastore- need to come up with 
+      	better strategy/ figure out if 1 sec is consistently enough
+      	*/
         setTimeout(that.getMessages, 1000);
         resolve();
       });

@@ -9,7 +9,7 @@ var MessageItem = React.createClass({
 					<div className="date-change">{ dateFormat(this.props.time, 'mmmm d, yyyy') }</div>
 				) : '' }
 				<div className="message">
-					<div className="poster">{this.props.poster}</div>
+					<div className="poster">{(this.props.firstName && this.props.lastName) ? this.props.firstName + ' ' + this.props.lastName : this.props.poster}</div>
 					<div className="time">{ dateFormat(this.props.time, 'h:MM TT') }</div>
 					<div className="content">{this.props.content}</div>
 				</div>

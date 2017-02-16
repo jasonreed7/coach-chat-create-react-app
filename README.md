@@ -6,7 +6,8 @@ Next steps:
 
 - Test in other browsers
 - Display correct username data once that feature is fixed in backend
-- Work on a message fetching strategy- websocket? Ajax requests on timed intervals depending on user activity?
+- Work on a new message fetching strategy- websocket? Ajax requests on timed intervals depending on user activity?
+- Implement infinite scroll and controlled loading of messages
 - Polyfills
 - Replace jQuery with lighter weight options
 - Future features: Emojis, profile pics, file attachments
