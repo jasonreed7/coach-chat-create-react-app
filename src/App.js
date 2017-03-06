@@ -115,6 +115,21 @@ var App = React.createClass({
     });
   },
 
+  sendFile: function(e) {
+    var that = this;
+    
+    var file = e.target.files[0];
+
+    var reader = new FileReader();
+
+    reader.readAsDataURL(file);
+    
+    reader.onload = function(fileEvent) {
+      that.img.src = fileEvent.target.result;
+    };
+
+  },
+
   // Resize message list for when textarea resizes
   resizeMessageList: function(){
     var $messageList = jQuery('.message-list');
@@ -133,8 +148,9 @@ var App = React.createClass({
   render: function() {
     return (
       <div>
+        <img style={{position: 'absolute'}} ref={(img) => {this.img = img;}} />
         <MessageList messages={this.state.messages} />
-        <MessageForm sendMessage={this.sendMessage} resizeMessageList={this.resizeMessageList} />
+        <MessageForm sendMessage={this.sendMessage} resizeMessageList={this.resizeMessageList} sendFile={this.sendFile} />
       </div>
     );
   } 

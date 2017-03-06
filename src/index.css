@@ -81,10 +81,18 @@ body {
 }
 
 .message-input {
-	margin-right: 5px;
 	flex-grow: 1;
 	resize: none;
 	overflow: hidden;
+	padding-top: 4px;
+	padding-bottom: 4px;
+	line-height: 17px;
+	border-radius: 4px 0 0 4px;
+}
+
+.message-input.has-input {
+	border-radius: 4px;
+	margin-right: 5px;
 }
 
 .message-button {
@@ -98,6 +106,29 @@ body {
 
 .message-button:hover {
 	background-color: #ff9933;
+}
+
+.file-input {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+
+.file-input-label {
+	border: 1px solid #ccc;
+	cursor: pointer;
+	background-color: #ccc;
+	font-size: 18px;
+	padding: 4px;
+	border-radius: 0 4px 4px 0;
+	margin-right: 5px;
+}
+
+.file-input-label:hover {
+	background-color: #e1e1e1; 
 }
 
 /* Webkit scrollbar */
