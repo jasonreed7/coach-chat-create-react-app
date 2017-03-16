@@ -3,7 +3,8 @@ var jQuery = require('jquery');
 import MessageList from './components/MessageList/MessageList';
 import MessageForm from './components/MessageForm/MessageForm';
 
-var webApiAddress = 'http://cycwebapi2.azurewebsites.net';
+//var webApiAddress = 'http://cycwebapi2.azurewebsites.net';
+var webApiAddress = 'https://542e4687.ngrok.io';
 
 function sameDate(date1, date2) {
   return date1.getDate() === date2.getDate() && date1.getMonth() === date2.getMonth() && date1.getFullYear() === date2.getFullYear();
