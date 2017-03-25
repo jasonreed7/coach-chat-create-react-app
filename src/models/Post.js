@@ -1,21 +1,38 @@
 class Post  {
 
 	constructor(post, prevPost) {
-		this.Content = post.Content;
-		this.Poster = post.Poster;
-		this.PostTime = post.postTime;
+		this.id = post.id;
+		this.content = post.Content;
+		this.poster = post.Poster;
+		this.firstName = post.FirstName;
+		this.lastName = post.LastName;
+		this.postTime = new Date(post.PostTime);
 
-		if(!prevPost) {
-			this.DateChange = true;
-		}
-		else {
-			this.DateChange = !Post.sameDate(prevPost.PostTime, this.PostTime);
+		if(prevPost) {
+			this.dateChange = !this.sameDay(prevPost.postTime, this.postTime);
 		}
 	}
 
-	// Static method to check if dates are on same day
-	static sameDate(date1, date2) {
-	  return date1.getDate() === date2.getDate() && date1.getMonth() === date2.getMonth() && date1.getFullYear() === date2.getFullYear();
+	// Check if other date is on same day as this.postTime
+	sameDay(otherDate) {
+		var date = this.postTime;
+		return date.getDate() === otherDate.getDate() && date.getMonth() === otherDate.getMonth() && date.getFullYear() === otherDate.getFullYear();
+	}
+
+	// Takes boolean or another date to compare
+	setDateChange(dateChangeParam) {
+		var paramType = typeof dateChangeParam;
+
+		// If param is boolean
+		if(paramType === 'boolean') {
+			this.dateChange = paramType;
+		}
+		// If param is object, presumably Date
+		else if(paramType === 'object') {
+			this.dateChange = !this.sameDay(dateChangeParam);
+		}
 	}
 
 }
+
+module.exports = Post;

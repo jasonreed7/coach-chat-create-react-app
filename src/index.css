@@ -14,6 +14,10 @@ body {
   padding: 0;
 }
 
+a {
+	text-decoration: none;
+}
+
 #root {
   padding-left: 20px;
   padding-right: 20px;
@@ -149,5 +153,15 @@ body {
 
 .image-attachment {
 	max-width: 100%;
-	max-height: 100%;
+	max-height: 200px;
+	margin-top: 5px;
+}
+
+.attachment-download-button {
+	margin-left: 6px;
+}
+
+.waiting-spinner {
+	height: 20px;
+	margin-right: 10px;
 }
