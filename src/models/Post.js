@@ -33,6 +33,10 @@ class Post  {
 		}
 	}
 
+	setIsUploaded(isUploaded) {
+		this.isUploaded = isUploaded;
+	}
+
 }
 
 module.exports = Post;

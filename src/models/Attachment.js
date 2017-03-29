@@ -26,10 +26,6 @@ class Attachment extends Post {
 		return webImageExtensions.includes(this.extension)  || this.type.startsWith('image');
 	}
 
-	setIsUploaded(isUploaded) {
-		this.isUploaded = isUploaded;
-	}
-
 }
 
 module.exports = Attachment;

@@ -7,7 +7,7 @@ import Attachment from './models/Attachment';
 import Post from './models/Post';
 
 //var webApiAddress = 'http://cycwebapi2.azurewebsites.net';
-var webApiAddress = 'http://d6e54201.ngrok.io';
+var webApiAddress = 'http://cycwebconvapitest.azurewebsites.net';
 
 function sameDate(date1, date2) {
   return date1.getDate() === date2.getDate() && date1.getMonth() === date2.getMonth() && date1.getFullYear() === date2.getFullYear();
@@ -34,70 +34,99 @@ var App = React.createClass({
     return {
       messages: [],
       sessionID: sessionID,
-      name: firstName + ' ' + lastName
+      name: firstName + ' ' + lastName,
+      messageRequestCount: 0,
+      messageCount: 0,
+      hasInitialMessages: false
     };
   },
 
   getMessages: function() {
     var that = this; 
+    var messageRequestCount = this.state.messageRequestCount + 1;
+    this.setState({ messageRequestCount: messageRequestCount });
 
-    return fetch(webApiAddress + '/api/User/TeamPosts?sessionID=' + this.state.sessionID + '&plMostRecentCount=0').then(function(response) {
+    return fetch(webApiAddress + '/api/User/TeamPosts?sessionID=' + this.state.sessionID + '&plMostRecentCount=' + this.state.messageCount).then(function(response) {
       
       return response.json();
 
     }).then(function(response) {
-      response = response.reverse();
+      // if this is the most recent request for messages
+      if(that.state.messageRequestCount === messageRequestCount && response.length > 0) {
 
-      // messages will hold an array of messages and attachments
-      var messages = [];
+        // keep count of how many unique messages have been processed
+        that.setState({ messageCount: that.state.messageCount + response.length });
 
-      for(var i = 0; i < response.length; i++) {
+        var oldMessageCount = that.state.messages.length;
+        var oldMessages = that.state.messages;
 
-        var currentMessage = response[i];
-        var prevPost;
+        response = response.reverse();
 
-        if(currentMessage.Content) {
-          
-          var currentPost;
+        // messages will hold an array of messages and attachments
+        var messages = [];
 
-          if(messages.length === 0) {
-            currentPost = new TextPost(currentMessage);
-            currentPost.setDateChange(true)
+        for(var i = 0; i < response.length; i++) {
+
+          var currentMessage = response[i];
+          var prevPost;
+
+          if(currentMessage.Content) {
+            
+            var currentPost;
+
+            // if no previous messages
+            if(oldMessages.length === 0 && messages.length === 0) {
+              currentPost = new TextPost(currentMessage);
+              currentPost.setDateChange(true)
+            }
+            else {
+              prevPost = messages[messages.length - 1] || oldMessages[oldMessages.length - 1];
+              currentPost = new TextPost(currentMessage, prevPost);
+            }
+
+            currentPost.setIsUploaded(true);
+
+            messages.push(currentPost);
+
           }
-          else {
-            prevPost = messages[messages.length - 1];
-            currentPost = new TextPost(currentMessage, prevPost);
-          }
 
-          messages.push(currentPost);
+          currentMessage.Attachments.forEach(function(attachment, attIndex) {
+            
+            if(attachment) {
+
+              var currentAttachment;
+
+              // if no previous messages
+              if(oldMessages.length === 0 && messages.length === 0) {
+                currentAttachment = new Attachment(currentMessage, undefined, attachment, attIndex);
+                currentAttachment.setDateChange(true);
+              }
+              else {
+                prevPost = messages[messages.length - 1] || oldMessages[oldMessages.length - 1];
+                currentAttachment = new Attachment(currentMessage, prevPost, attachment, attIndex);
+              }
+
+              currentAttachment.setIsUploaded(true);
+
+              messages.push(currentAttachment);
+
+            }
+
+          });
 
         }
 
-        currentMessage.Attachments.forEach(function(attachment, attIndex) {
-          
-          if(attachment) {
+        that.setState({ messages: that.state.messages.filter(function(message) {
+            return message.isUploaded;
+          })
+          .concat(messages) });
 
-            var currentAttachment;
-
-            if(messages.length === 0) {
-              currentAttachment = new Attachment(currentMessage, undefined, attachment, attIndex);
-            }
-            else {
-              prevPost = messages[messages.length - 1];
-              currentAttachment = new Attachment(currentMessage, prevPost, attachment, attIndex);
-            }
-
-            currentAttachment.setIsUploaded(true);
-
-            messages.push(currentAttachment);
-
-          }
-
-        });
-
+        // if this is first update, set interval on updating messages
+        if(!that.state.hasInitialMessages) {
+          setInterval(that.getMessages, 30000);
+          that.setState({hasInitialMessages: true});
+        }
       }
-
-      that.setState({messages: messages});
     });
   },
 
