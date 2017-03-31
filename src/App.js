@@ -177,10 +177,10 @@ var App = React.createClass({
     });
   },
 
-  sendFile: function(e) {
+  sendFile: function(file, fileName) {
     var that = this;
     
-    var file = e.target.files[0];
+    //var file = e.target.files[0];
 
     var reader = new FileReader();
     var reader2 = new FileReader();
@@ -188,7 +188,7 @@ var App = React.createClass({
     reader.readAsDataURL(file);
     
     reader.onload = function(fileEvent) {
-      that.optimisticallyAddFile(file, fileEvent);
+      that.optimisticallyAddFile(file, fileEvent, fileName);
 
       var formData = new FormData();
 
@@ -197,7 +197,7 @@ var App = React.createClass({
 
         jQuery.ajax({
           type: "PUT",
-          url: webApiAddress + '/api/User/UploadFile?SessionID=' + that.state.sessionID + '&Filename=' + file.name,
+          url: webApiAddress + '/api/User/UploadFile?SessionID=' + that.state.sessionID + '&Filename=' + fileName,
           //url: "/API/document/upload/" + file.name + "/" + encodedString ,
           contentType: false,
           processData: false,
@@ -206,79 +206,11 @@ var App = React.createClass({
           setTimeout(that.getMessages, 1000);
         });
 
-      /*formData.append('Content', '');
-      formData.append('SessionID', that.state.sessionID);
-      formData.append('Subject', 'Attachment');
-      formData.append('AName', file.name);
-      formData.append('Body', file, file.name);
-
-      jQuery.ajax({
-        // Your server script to process the upload
-        url: webApiAddress + '/api/User/TeamPost',
-        type: 'PUT',
-
-        // Form data
-        data: formData,
-
-        // Tell jQuery not to process data or worry about content-type
-        // You *must* include these options!
-        cache: false,
-        contentType: false,
-        processData: false//,*/
-
-        // Custom XMLHttpRequest
-        /*xhr: function() {
-          var myXhr = jQuery.ajaxSettings.xhr();
-          if (myXhr.upload) {
-            // For handling the progress of the upload
-            myXhr.upload.addEventListener('progress', function(e) {
-              if (e.lengthComputable) {
-                  $('progress').attr({
-                    value: e.loaded,
-                    max: e.total,
-                  });
-                }
-            } , false);
-          }
-          return myXhr;
-        },
-      });*/
-    };
-
-    reader2.readAsArrayBuffer(file);
-
-    reader2.onload = function(fileEvent) {
-
-      // Send attachment to server
-      /*return new Promise(function(resolve, reject) {
-        jQuery.ajax({
-          url: webApiAddress + '/api/User/TeamPost',
-          method: 'PUT',
-          data: {
-            Content: '',
-            SessionID: that.state.sessionID,
-            Subject: 'Attachment',
-            Attachments: [{
-              AName: file.name,
-              Body: new Uint8Array(fileEvent.target.result)
-            }]
-          }
-        });.done(function() {
-           
-          //Wait enought time for new message to be in datastore- need to come up with 
-          //better strategy/ figure out if 1 sec is consistently enough
-          
-          setTimeout(that.getMessages, 1000);
-          resolve();
-        });
-
-      });*/
-    
     };
 
   },
 
-  optimisticallyAddFile: function(file, fileEvent) {
+  optimisticallyAddFile: function(file, fileEvent, fileName) {
 
     var messages = this.state.messages;
 
@@ -288,7 +220,7 @@ var App = React.createClass({
     };
 
     var attachmentProps = {
-      AName: file.name,
+      AName: fileName,
       Atype: file.type
     };
 
