@@ -7,7 +7,9 @@ import Attachment from './models/Attachment';
 import Post from './models/Post';
 
 //var webApiAddress = 'http://cycwebapi2.azurewebsites.net';
-var webApiAddress = 'http://cycwebconvapitest.azurewebsites.net';
+//var webApiAddress = 'http://cycwebconvapitest.azurewebsites.net';
+var webApiAddress = 'http://c4c7efb2.ngrok.io';
+//var webApiAddress = '';
 
 function sameDate(date1, date2) {
   return date1.getDate() === date2.getDate() && date1.getMonth() === date2.getMonth() && date1.getFullYear() === date2.getFullYear();
@@ -120,12 +122,12 @@ var App = React.createClass({
             return message.isUploaded;
           })
           .concat(messages) });
+      }
 
-        // if this is first update, set interval on updating messages
-        if(!that.state.hasInitialMessages) {
-          setInterval(that.getMessages, 30000);
-          that.setState({hasInitialMessages: true});
-        }
+      // if this is first update, set interval on updating messages
+      if(!that.state.hasInitialMessages) {
+        setInterval(that.getMessages, 30000);
+        that.setState({hasInitialMessages: true});
       }
     });
   },
@@ -255,16 +257,20 @@ var App = React.createClass({
     $messageList.css('height', newHeight);
   },
 
+  isAppleMobile: function() {
+    return /(iPhone|iPod)/g.test( navigator.userAgent );
+  },
+
   componentDidMount: function() {
     this.getMessages();
   },
 
   render: function() {
     return (
-      <div>
+      <div className="app">
         <img style={{position: 'absolute'}} ref={(img) => {this.img = img;}} />
-        <MessageList messages={this.state.messages} />
-        <MessageForm sendMessage={this.sendMessage} resizeMessageList={this.resizeMessageList} sendFile={this.sendFile} />
+        <MessageList messages={this.state.messages} hasInitialMessages={this.state.hasInitialMessages} />
+        <MessageForm sendMessage={this.sendMessage} resizeMessageList={this.resizeMessageList} sendFile={this.sendFile} isAppleMobile={this.isAppleMobile()} />
       </div>
     );
   } 

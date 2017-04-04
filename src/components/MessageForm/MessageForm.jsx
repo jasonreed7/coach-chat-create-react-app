@@ -101,7 +101,7 @@ var MessageForm = React.createClass({
 
 		return (
 			<div className="message-form">
-				<TextArea className={ "message-input " + ( this.hasUserInput() ? "has-input" : "" ) } value={this.state.userInput} onChange={this.handleUserInput} onHeightChange={this.props.resizeMessageList}
+				<TextArea className={ "message-input " + ( this.hasUserInput() ? "has-input" : "" ) + (this.props.isAppleMobile ? " text-16": "")} value={this.state.userInput} onChange={this.handleUserInput} onHeightChange={this.props.resizeMessageList}
 				ref = { (textArea) => { this.textArea = textArea; } }/>
 				{fileInput}
 				<button className="btn btn-orange" onClick={this.sendMessage}>Send Message</button>
@@ -117,7 +117,8 @@ var MessageForm = React.createClass({
 								id="file-name"
 								type="text" 
 								value={this.state.fileName} 
-								onChange={this.handleFileNameChange} 
+								onChange={this.handleFileNameChange}
+          						className={this.props.isAppleMobile ? "text-16": ""}
 							/>
 						</div>
 						<div>

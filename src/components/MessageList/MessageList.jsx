@@ -26,6 +26,29 @@ var MessageList = React.createClass({
 	},
 
 	render: function() {
+		if(!this.props.hasInitialMessages) {
+			return (
+				<div className="message-list loading">
+					<div className="v-center-container">
+						<div className="h-center-container">
+							<img className="spinner" src="http://chooseyourcoach.com/pictures/waitingpopup.gif" />
+						</div>
+					</div>
+				</div>
+			);
+		}
+		else if(this.props.messages.length === 0) {
+			return (
+				<div className="message-list loading">
+					<div className="v-center-container">
+						<div className="h-center-container">
+							<div className="no-messages-text">No messages yet</div>
+						</div>
+					</div>
+				</div>
+			);
+		}
+
 		var messages = [];
 		this.props.messages.forEach(function(message) {
 

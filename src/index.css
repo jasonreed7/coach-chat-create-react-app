@@ -14,8 +14,27 @@ body {
   padding: 0;
 }
 
+.v-center-container {
+	height: 100%;
+}
+
+.h-center-container {
+	position: absolute;
+    top: 50%;
+    margin-top: -24px;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-bottom: 0;
+    text-align: center;
+    width: 100%;
+}
+
 a {
 	text-decoration: none;
+}
+
+.text-16 {
+	font-size: 16px;
 }
 
 #root {
@@ -138,7 +157,7 @@ a {
 	cursor: pointer;
 	background-color: #ccc;
 	font-size: 18px;
-	padding: 4px;
+	padding: 3px 4px;
 	border-radius: 0 4px 4px 0;
 	margin-right: 5px;
 }
