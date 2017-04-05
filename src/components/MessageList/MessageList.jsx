@@ -5,6 +5,7 @@ var MessageText = require('../MessageText/MessageText');
 var AttachmentItem = require('../AttachmentItem/AttachmentItem');
 var Attachment = require('../../models/Attachment');
 var TextPost = require('../../models/TextPost');
+var InitialMessage = require('../InitialMessage/InitialMessage');
 
 function scrollToBottom() {
       var $messageList = jQuery('.message-list');
@@ -26,26 +27,17 @@ var MessageList = React.createClass({
 	},
 
 	render: function() {
-		if(!this.props.hasInitialMessages) {
+		if(!this.props.validUser) {
+			return <InitialMessage message="Please use the personal link that was emailed to you to access your account" />;
+		}
+		else if(!this.props.hasInitialMessages) {
 			return (
-				<div className="message-list loading">
-					<div className="v-center-container">
-						<div className="h-center-container">
-							<img className="spinner" src="http://chooseyourcoach.com/pictures/waitingpopup.gif" />
-						</div>
-					</div>
-				</div>
+					<InitialMessage spinner={true} />
 			);
 		}
 		else if(this.props.messages.length === 0) {
 			return (
-				<div className="message-list loading">
-					<div className="v-center-container">
-						<div className="h-center-container">
-							<div className="no-messages-text">No messages yet</div>
-						</div>
-					</div>
-				</div>
+					<InitialMessage message="No messages yet" />
 			);
 		}
 

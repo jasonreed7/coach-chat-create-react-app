@@ -112,7 +112,7 @@ var MessageForm = React.createClass({
 				>
 					<div style={dialogStyle}>
 						<div className="file-name-container">
-							<label htmlFor="file-name">Filename: </label>
+							<label htmlFor="file-name">File name: </label>
 							<input 
 								id="file-name"
 								type="text" 

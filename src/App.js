@@ -8,7 +8,7 @@ import Post from './models/Post';
 
 //var webApiAddress = 'http://cycwebapi2.azurewebsites.net';
 //var webApiAddress = 'http://cycwebconvapitest.azurewebsites.net';
-var webApiAddress = 'http://c4c7efb2.ngrok.io';
+var webApiAddress = 'http://91a13a4f.ngrok.io';
 //var webApiAddress = '';
 
 function sameDate(date1, date2) {
@@ -33,13 +33,22 @@ var App = React.createClass({
     var firstName = user.firstName;
     var lastName = user.lastName;
 
+    var validUser;
+    if(sessionID && firstName && lastName) {
+      validUser = true;
+    }
+    else {
+      validUser = false;
+    }
+
     return {
       messages: [],
       sessionID: sessionID,
       name: firstName + ' ' + lastName,
       messageRequestCount: 0,
       messageCount: 0,
-      hasInitialMessages: false
+      hasInitialMessages: false,
+      validUser: validUser
     };
   },
 
@@ -269,7 +278,7 @@ var App = React.createClass({
     return (
       <div className="app">
         <img style={{position: 'absolute'}} ref={(img) => {this.img = img;}} />
-        <MessageList messages={this.state.messages} hasInitialMessages={this.state.hasInitialMessages} />
+        <MessageList messages={this.state.messages} hasInitialMessages={this.state.hasInitialMessages} validUser={this.state.validUser} />
         <MessageForm sendMessage={this.sendMessage} resizeMessageList={this.resizeMessageList} sendFile={this.sendFile} isAppleMobile={this.isAppleMobile()} />
       </div>
     );

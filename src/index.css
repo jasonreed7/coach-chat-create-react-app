@@ -16,6 +16,7 @@ body {
 
 .v-center-container {
 	height: 100%;
+	position: relative;
 }
 
 .h-center-container {
@@ -111,6 +112,7 @@ a {
 	padding-bottom: 4px;
 	line-height: 17px;
 	border-radius: 4px 0 0 4px;
+	margin-right: 0;
 }
 
 .message-input.has-input {
@@ -124,6 +126,7 @@ a {
 	border-radius: 4px;
 	padding: 6px 12px;
 	cursor: pointer;
+	white-space: nowrap;
 }
 
 .btn-orange {
