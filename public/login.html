@@ -41,7 +41,7 @@
 	<script>
 	$(document).ready(function() {
 
-		var webApiAddress = 'http://cycwebapi2.azurewebsites.net';
+		var webApiAddress = 'http://6fa0aae2.ngrok.io';
 
 		function getUrlVars() {
 			var vars = {};
@@ -57,9 +57,10 @@
 
 		var urlToken = getUrlVars()["token"];
 		var urlMode = getUrlVars()["mode"];
+		var engagementID = getUrlVars()["engagement"];
 
 		//Send link without token to Warby coming soon page
-		if(!urlToken) {
+		if(!urlToken || ! engagementID) {
 			rejectLogin();
 			return false;
 		}
@@ -75,21 +76,22 @@
 			var compositeData = {
 				BrowserInfo: navigator.userAgent,
 				userID: urlToken
+				EngagementID: engagementID;
 			};
 
 			$.ajax({
 				type: 'PUT',
-				url: webApiAddress + '/composite/newSession',
+				url: webApiAddress + '/composite/newEngagementSession',
 				contentType: 'application/json; charset=utf-8',
 				data: JSON.stringify(compositeData)
 			}).done(function (data) {
-				if(data.sessionID && data.sessionResp && data.sessionResp.nameFirst && data.sessionResp.nameLast)
+				if(data.sessionID && data.nameFirst && data.nameLast)
 				{
 					var user = {
 						sessionID: data.sessionID,
 						token: urlToken,
-						firstName: data.sessionResp.nameFirst,
-						lastName: data.sessionResp.nameLast
+						firstName: data.nameFirst,
+						lastName: data.nameLast
 					};
 
 					sessionStorage.setItem("user", JSON.stringify(user));

@@ -8,7 +8,7 @@ import Post from './models/Post';
 
 //var webApiAddress = 'http://cycwebapi2.azurewebsites.net';
 //var webApiAddress = 'http://cycwebconvapitest.azurewebsites.net';
-var webApiAddress = 'http://91a13a4f.ngrok.io';
+var webApiAddress = 'http://6fa0aae2.ngrok.io';
 //var webApiAddress = '';
 
 function sameDate(date1, date2) {
@@ -71,7 +71,7 @@ var App = React.createClass({
         var oldMessageCount = that.state.messages.length;
         var oldMessages = that.state.messages;
 
-        response = response.reverse();
+        //response = response.reverse();
 
         // messages will hold an array of messages and attachments
         var messages = [];
