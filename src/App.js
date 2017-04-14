@@ -7,8 +7,8 @@ import Attachment from './models/Attachment';
 import Post from './models/Post';
 
 //var webApiAddress = 'http://cycwebapi2.azurewebsites.net';
-//var webApiAddress = 'http://cycwebconvapitest.azurewebsites.net';
-var webApiAddress = 'http://6fa0aae2.ngrok.io';
+var webApiAddress = 'http://cycwebconvapitest.azurewebsites.net';
+//var webApiAddress = 'http://c85ef445.ngrok.io';
 //var webApiAddress = '';
 
 function sameDate(date1, date2) {
@@ -32,6 +32,7 @@ var App = React.createClass({
     var sessionID = user.sessionID;
     var firstName = user.firstName;
     var lastName = user.lastName;
+    var engagementAlias = user.engagementAlias;
 
     var validUser;
     if(sessionID && firstName && lastName) {
@@ -44,7 +45,7 @@ var App = React.createClass({
     return {
       messages: [],
       sessionID: sessionID,
-      name: firstName + ' ' + lastName,
+      name: engagementAlias,
       messageRequestCount: 0,
       messageCount: 0,
       hasInitialMessages: false,
@@ -135,7 +136,7 @@ var App = React.createClass({
 
       // if this is first update, set interval on updating messages
       if(!that.state.hasInitialMessages) {
-        setInterval(that.getMessages, 30000);
+        setInterval(that.getMessages, 10000);
         that.setState({hasInitialMessages: true});
       }
     });

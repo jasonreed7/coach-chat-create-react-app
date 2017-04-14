@@ -41,7 +41,8 @@
 	<script>
 	$(document).ready(function() {
 
-		var webApiAddress = 'http://6fa0aae2.ngrok.io';
+		//var webApiAddress = 'http://6fa0aae2.ngrok.io';
+		var webApiAddress = 'http://cycwebconvapitest.azurewebsites.net';
 
 		function getUrlVars() {
 			var vars = {};
@@ -75,8 +76,8 @@
 
 			var compositeData = {
 				BrowserInfo: navigator.userAgent,
-				userID: urlToken
-				EngagementID: engagementID;
+				userID: urlToken,
+				EngagementID: engagementID
 			};
 
 			$.ajax({
@@ -87,11 +88,15 @@
 			}).done(function (data) {
 				if(data.sessionID && data.nameFirst && data.nameLast)
 				{
+					sessionStorage.setItem("data", JSON.stringify(data));
+
+
 					var user = {
 						sessionID: data.sessionID,
 						token: urlToken,
 						firstName: data.nameFirst,
-						lastName: data.nameLast
+						lastName: data.nameLast,
+						engagementAlias: data.EngagementAlias
 					};
 
 					sessionStorage.setItem("user", JSON.stringify(user));
