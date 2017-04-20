@@ -7,7 +7,8 @@
     <title></title>
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-
+	<!-- sessionStorage polyfill -->
+	<script src="./webstorage-polyfill.js"></script>
 	<!-- Include Helvetica Neue -->
 	<style type="text/css">
 	@font-face{
@@ -41,7 +42,7 @@
 	<script>
 	$(document).ready(function() {
 
-		//var webApiAddress = 'http://6fa0aae2.ngrok.io';
+		//var webApiAddress = 'http://c9260a4d.ngrok.io';
 		var webApiAddress = 'http://cycwebconvapitest.azurewebsites.net';
 
 		function getUrlVars() {

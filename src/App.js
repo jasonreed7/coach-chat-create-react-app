@@ -5,10 +5,11 @@ import MessageForm from './components/MessageForm/MessageForm';
 import TextPost from './models/TextPost';
 import Attachment from './models/Attachment';
 import Post from './models/Post';
+require('webstorage-polyfill');
 
 //var webApiAddress = 'http://cycwebapi2.azurewebsites.net';
 var webApiAddress = 'http://cycwebconvapitest.azurewebsites.net';
-//var webApiAddress = 'http://c85ef445.ngrok.io';
+//var webApiAddress = 'http://c9260a4d.ngrok.io';
 //var webApiAddress = '';
 
 function sameDate(date1, date2) {
@@ -65,6 +66,12 @@ var App = React.createClass({
     }).then(function(response) {
       // if this is the most recent request for messages
       if(that.state.messageRequestCount === messageRequestCount && response.length > 0) {
+
+        that.setState({ 
+          messages: that.state.messages.filter(function(message) {
+            return message.isUploaded;
+          })
+        });
 
         // keep count of how many unique messages have been processed
         that.setState({ messageCount: that.state.messageCount + response.length });
@@ -128,10 +135,7 @@ var App = React.createClass({
 
         }
 
-        that.setState({ messages: that.state.messages.filter(function(message) {
-            return message.isUploaded;
-          })
-          .concat(messages) });
+        that.setState({ messages: that.state.messages.concat(messages) });
       }
 
       // if this is first update, set interval on updating messages
