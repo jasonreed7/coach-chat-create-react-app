@@ -21,7 +21,7 @@ class Attachment extends Post {
 	}
 
 	isWebImage() {
-		var webImageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'tiff'];
+		var webImageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'tiff', 'svg'];
 
 		return webImageExtensions.includes(this.extension)  || this.type.startsWith('image');
 	}

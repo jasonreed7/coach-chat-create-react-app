@@ -15,15 +15,17 @@ function scrollToBottom() {
 
 var MessageList = React.createClass({
 	componentDidUpdate: function(prevProps, prevState) {
-		// TODO: Resolve when to scroll down
-		// If new messages, scroll to bottom
-		/* 
-		if(prevProps.messages.length != this.props.messages.length) {
+		var currentLength = this.props.messages.filter(function(message) {
+				return message.isUploaded;
+			}).length;
+
+		var prevLength = this.props.messages.filter(function(message) {
+				return message.isUploaded;
+			}).length;
+
+		if(currentLength > prevLength) {
 			scrollToBottom();
-		}
-		*/
-		// for now scroll down whenever component updates, since there will always be new messages
-		scrollToBottom();
+		}	
 	},
 
 	render: function() {
@@ -54,7 +56,7 @@ var MessageList = React.createClass({
 			}
 			else if(message.constructor === Attachment) {
 				child = (
-					<AttachmentItem attachment={message} />
+					<AttachmentItem attachment={message} scrollToBottom={scrollToBottom} />
 				)
 			}
 
