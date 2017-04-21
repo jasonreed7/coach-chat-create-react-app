@@ -17,14 +17,11 @@ var AttachmentItem = React.createClass({
 		}
 	},
 
-	resolveError: function() {
-		this.setState({ imageError: false })
-	},
-
 	imageError: function() {
 		this.setState({ 
 			imageError: true,
-			imageTries: this.state.imageTries + 1 
+			imageTries: this.state.imageTries + 1,
+			timeStamp: new Date().getTime() 
 		});
 	},
 
@@ -75,7 +72,7 @@ var AttachmentItem = React.createClass({
 			Will try 3 times. 
 			*/
 			else {
-				var timeStamp = new Date().getTime();
+				var timeStamp = this.state.timeStamp;
 
 				return (
 					<div>
@@ -84,8 +81,7 @@ var AttachmentItem = React.createClass({
 						</div>
 						<div>
 							<img className="image-attachment" 
-								src={attachment.uri + '&timeStamp=' + timeStamp} 
-								onLoad={this.resolveError}
+								src={attachment.uri + '&timeStamp=' + timeStamp}
 								onError={this.imageError}
 							/>
 						</div>

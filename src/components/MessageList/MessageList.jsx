@@ -15,13 +15,9 @@ function scrollToBottom() {
 
 var MessageList = React.createClass({
 	componentDidUpdate: function(prevProps, prevState) {
-		var currentLength = this.props.messages.filter(function(message) {
-				return message.isUploaded;
-			}).length;
+		var currentLength = this.props.messages.length;
 
-		var prevLength = this.props.messages.filter(function(message) {
-				return message.isUploaded;
-			}).length;
+		var prevLength = prevProps.messages.length;
 
 		if(currentLength > prevLength) {
 			scrollToBottom();
