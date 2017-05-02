@@ -12,12 +12,16 @@ html, body, #root, [data-reactroot] {
 	height: calc(100% - 56px);
 }
 
+* {
+	font-family: "HelveticaNeueW02-65Medi", sans-serif;	
+}
+
 body {
-  font-family: "HelveticaNeueW02-65Medi", sans-serif;
-  font-size: 15px;
-  line-height: 1.3em;
-  margin: 0;
-  padding: 0;
+	font-family: "HelveticaNeueW02-65Medi", sans-serif;
+	font-size: 15px;
+	line-height: 1.3em;
+	margin: 0;
+	padding: 0;
 }
 
 /* Avoid weird text size changes on mobile safari */
@@ -75,7 +79,6 @@ a {
 
 .date-change {
 	text-align: center;
-	font-weight: bold;
 }
 
 .time, .date-change {
@@ -91,8 +94,9 @@ a {
 	display: inline-block;
 }
 
-.poster {
-	font-weight: bold;
+.poster,
+.date-change {
+	font-family: HelveticaNeueW02-75Bold, sans-serif;
 }
 
 .time {

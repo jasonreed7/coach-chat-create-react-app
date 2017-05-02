@@ -17,8 +17,12 @@
 	padding: 10px 15px 16px;
 }
 
-.nav-right {
+.nav-right-container {
 	float: right;
+}
+
+.nav-right {
+	display: inline-block;
 	padding: 21px 15px 16px;
     line-height: 13px;
 }
@@ -31,6 +35,23 @@
 .nav-item a:hover,
 .nav-item a:active {
 	color: #ff9933;
+}
+
+.btn.nav-btn-gray {
+	border: none;
+	background-color: #d4e6ea;
+	color: black;
+	padding: 6px 8px 4px;
+}
+
+.nav-btn-gray:hover,
+.nav-btn-gray:focus,
+.nav-btn-gray:active {
+	background-color: #e5f0f2;
+}
+
+.nav-logout-link-container {
+	padding-top: 14px;
 }
 
 @media screen and (max-width: 580px) {
@@ -76,8 +97,11 @@
 		top: 0;
 		right: 0;
 		padding-bottom: 8px;
-		font-weight: bold;
 		display: block;
+	}
+
+	.close-menu-container {
+		float: left;
 	}
 
 	.close-menu {
@@ -98,6 +122,12 @@
 		border-bottom: 1px solid white;
 		margin-left: 12px;
 		margin-right: 5px;
+		text-align: right;
+	}
+
+	.mobile-menu-logout {
+		border: none;
+		padding-top: 18px;
 	}
 
 }

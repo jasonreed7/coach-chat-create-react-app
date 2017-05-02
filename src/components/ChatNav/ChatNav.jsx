@@ -18,17 +18,6 @@ var ChatNav = React.createClass({
 		var clientScheduleLink = this.props.clientScheduleLink;
 		var clientScheduleAdminLink = this.props.clientScheduleAdminLink;
 
-		var mobileMenu = (
-			<div className="mobile-menu">
-				<div className="menu-item">
-					<a href={ clientScheduleLink ? clientScheduleLink : '' }>HOME</a>
-				</div>
-				<div className="menu-item">
-					<a href={ clientScheduleAdminLink ? clientScheduleAdminLink : '' }>VIEW ACCOUNT</a>
-				</div>
-			</div>
-		);
-
 		return (
 			<div>
 				<nav className="chat-nav">
@@ -38,8 +27,15 @@ var ChatNav = React.createClass({
 								<img className="nav-logo" src="/pictures/cyc-logo.jpg" />
 							</a>
 						</div>
-						<div className="nav-account-link-container nav-right nav-item">
-							<a href={ clientScheduleAdminLink ? clientScheduleAdminLink : '' }>Hi {this.props.firstName}!</a>
+						<div className="nav-right-container">
+							<div className="nav-account-link-container nav-right nav-item">
+								<a href={ clientScheduleAdminLink ? clientScheduleAdminLink : '' }>Hi {this.props.firstName}!</a>
+							</div>
+							<div className="nav-logout-link-container nav-right nav-item">
+								<a href="/logout.html">
+									<button className="btn nav-btn-gray">LOG OUT</button>
+								</a>
+							</div>
 						</div>
 					</div>
 					<div className="mobile-nav">
@@ -65,6 +61,9 @@ var ChatNav = React.createClass({
 								<button className="close-menu" 
 									onClick={this.closeMenu}
 								>X</button>
+							</div>
+							<div className="mobile-menu-item mobile-menu-logout">
+								<a className="mobile-menu-link" href="/logout.html">LOG OUT</a>
 							</div>
 							<div className="mobile-menu-item">
 								<a className="mobile-menu-link" href={ clientScheduleLink ? clientScheduleLink : '' }>HOME</a>
