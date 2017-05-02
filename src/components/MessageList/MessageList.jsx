@@ -35,7 +35,7 @@ var MessageList = React.createClass({
 		}
 		else if(this.props.messages.length === 0) {
 			return (
-					<InitialMessage message="No messages yet" />
+					<InitialMessage message="This is your first post. Make it a good one." />
 			);
 		}
 

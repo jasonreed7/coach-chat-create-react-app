@@ -1,9 +1,15 @@
+@import url("css/chatNav.css");
+
 * {
 	box-sizing: border-box;
 }
 
 html, body, #root, [data-reactroot] {
 	height: 100%;
+}
+
+.app {
+	height: calc(100% - 56px);
 }
 
 body {
@@ -45,7 +51,7 @@ a {
 	font-size: 16px;
 }
 
-#root {
+.app {
   padding-left: 20px;
   padding-right: 20px;
   padding-top: 20px;
@@ -53,7 +59,7 @@ a {
 }
 
 @media screen and (min-width: 1008px) {
-	#root {
+	.app {
 		margin-left: auto;
 		margin-right: auto;
 		max-width: 968px;

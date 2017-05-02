@@ -42,8 +42,8 @@
 	<script>
 	$(document).ready(function() {
 
-		//var webApiAddress = 'http://c9260a4d.ngrok.io';
 		var webApiAddress = 'http://cycwebconvapitest.azurewebsites.net';
+		//var webApiAddress = 'http://5c4e12e1.ngrok.io';
 
 		function getUrlVars() {
 			var vars = {};
@@ -87,6 +87,7 @@
 				contentType: 'application/json; charset=utf-8',
 				data: JSON.stringify(compositeData)
 			}).done(function (data) {
+				debugger;
 				if(data.sessionID && data.nameFirst && data.nameLast)
 				{
 					sessionStorage.setItem("data", JSON.stringify(data));
@@ -99,6 +100,14 @@
 						lastName: data.nameLast,
 						engagementAlias: data.EngagementAlias
 					};
+
+					if(data.clientScheduleAdminLink) {
+						user.clientScheduleAdminLink = data.clientScheduleAdminLink;
+					}
+
+					if(data.clientScheduleLink) {
+						user.clientScheduleLink = data.clientScheduleLink;
+					}
 
 					sessionStorage.setItem("user", JSON.stringify(user));
 

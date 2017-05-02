@@ -1,5 +1,6 @@
 import React from 'react';
 var jQuery = require('jquery');
+import ChatNav from './components/ChatNav/ChatNav';
 import MessageList from './components/MessageList/MessageList';
 import MessageForm from './components/MessageForm/MessageForm';
 import TextPost from './models/TextPost';
@@ -9,7 +10,7 @@ require('webstorage-polyfill');
 
 //var webApiAddress = 'http://cycwebapi2.azurewebsites.net';
 var webApiAddress = 'http://cycwebconvapitest.azurewebsites.net';
-//var webApiAddress = 'http://c9260a4d.ngrok.io';
+//var webApiAddress = 'http://5c4e12e1.ngrok.io';
 //var webApiAddress = '';
 
 function sameDate(date1, date2) {
@@ -34,6 +35,17 @@ var App = React.createClass({
     var firstName = user.firstName;
     var lastName = user.lastName;
     var engagementAlias = user.engagementAlias;
+    var clientScheduleLink;
+    var clientScheduleAdminLink;
+
+
+    if(user.clientScheduleLink) {
+      clientScheduleLink = user.clientScheduleLink;
+    }
+
+    if(user.clientScheduleAdminLink) {
+      clientScheduleAdminLink = user.clientScheduleAdminLink;
+    }
 
     var validUser;
     if(sessionID && firstName && lastName) {
@@ -46,11 +58,14 @@ var App = React.createClass({
     return {
       messages: [],
       sessionID: sessionID,
+      firstName: firstName,
       name: engagementAlias,
       messageRequestCount: 0,
       messageCount: 0,
       hasInitialMessages: false,
-      validUser: validUser
+      validUser: validUser,
+      clientScheduleLink: clientScheduleLink,
+      clientScheduleAdminLink: clientScheduleAdminLink
     };
   },
 
@@ -281,10 +296,16 @@ var App = React.createClass({
 
   render: function() {
     return (
-      <div className="app">
-        <img style={{position: 'absolute'}} ref={(img) => {this.img = img;}} />
-        <MessageList messages={this.state.messages} hasInitialMessages={this.state.hasInitialMessages} validUser={this.state.validUser} />
-        <MessageForm sendMessage={this.sendMessage} resizeMessageList={this.resizeMessageList} sendFile={this.sendFile} isAppleMobile={this.isAppleMobile()} />
+      <div>
+        <ChatNav firstName={this.state.firstName} 
+          clientScheduleLink={this.state.clientScheduleLink} 
+          clientScheduleAdminLink={this.state.clientScheduleAdminLink}
+        />
+        <div className="app">
+          <img style={{position: 'absolute'}} ref={(img) => {this.img = img;}} />
+          <MessageList messages={this.state.messages} hasInitialMessages={this.state.hasInitialMessages} validUser={this.state.validUser} />
+          <MessageForm sendMessage={this.sendMessage} resizeMessageList={this.resizeMessageList} sendFile={this.sendFile} isAppleMobile={this.isAppleMobile()} />
+        </div>
       </div>
     );
   } 
