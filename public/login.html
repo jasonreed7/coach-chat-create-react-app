@@ -87,6 +87,10 @@
 				contentType: 'application/json; charset=utf-8',
 				data: JSON.stringify(compositeData)
 			}).done(function (data) {
+				if(data.companyName) {
+					sessionStorage.setItem('company', data.companyName);
+				}
+
 				if(data.sessionID && data.nameFirst && data.nameLast)
 				{
 					sessionStorage.setItem("data", JSON.stringify(data));
