@@ -8,8 +8,8 @@ import Attachment from './models/Attachment';
 import Post from './models/Post';
 require('webstorage-polyfill');
 
-//var webApiAddress = 'http://cycwebapi2.azurewebsites.net';
-var webApiAddress = 'http://cycwebconvapitest.azurewebsites.net';
+var webApiAddress = 'http://cycwebapi2.azurewebsites.net';
+//var webApiAddress = 'http://cycwebconvapitest.azurewebsites.net';
 //var webApiAddress = 'http://5c4e12e1.ngrok.io';
 //var webApiAddress = '';
 
